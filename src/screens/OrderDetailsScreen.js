@@ -59,8 +59,8 @@ const OrderDetailsScreen = ({ route, navigation }) => {
             // console.log('orderId', orderId)
             try {
                 const response = await fetchOrderDetails(orderId);
-                // console.log("Order details:", response.data);
-                setOrderDetails(response.data.Data);
+                console.log("Order details:", response.data.data);
+                setOrderDetails(response.data.data);
             } catch (error) {
                 console.error("Error fetching order details:", error);
             } finally {
@@ -120,10 +120,10 @@ const OrderDetailsScreen = ({ route, navigation }) => {
 
 
     const handleNavigate = () => {
-        if (orderDetails?.ShippingAddress) {
+        if (orderDetails?.order) {
             // const encodedAddress = encodeURIComponent(orderDetails.customerAddress);
             // const url = `https://www.google.com/maps/dir/?api=1&destination=${encodedAddress}`;
-            const url = `https://www.google.com/maps/dir/?api=1&origin=${currentLocation.latitude},${currentLocation.longitude}&destination=${orderDetails?.OrderDetails?.latitude},${orderDetails?.OrderDetails?.longitude}`
+            const url = `https://www.google.com/maps/dir/?api=1&origin=${currentLocation.latitude},${currentLocation.longitude}&destination=${orderDetails?.order?.latitude},${orderDetails?.order?.longitude}`
             Linking.openURL(url);
         } else {
             Alert.alert("Address not available");
@@ -135,7 +135,7 @@ const OrderDetailsScreen = ({ route, navigation }) => {
     };
 
     const handleCallKapra = () => {
-        Linking.openURL(`tel:9605913522`); // Replace with real number
+        Linking.openURL(`tel:9048801110`); // Replace with real number
     };
 
     if (loading || orderDetailsLoading) return <LoaderComponent />;
@@ -157,12 +157,12 @@ const OrderDetailsScreen = ({ route, navigation }) => {
         .join(" "); // join with space
 
     const address = [
-        orderDetails?.ShippingAddress?.addLine1,
-        orderDetails?.ShippingAddress?.addLine2,
-        orderDetails?.ShippingAddress?.addLine3,
-        orderDetails?.ShippingAddress?.area,
-        orderDetails?.ShippingAddress?.district,
-        orderDetails?.ShippingAddress?.pincode,
+        orderDetails?.customer?.addLine1,
+        orderDetails?.customer?.addLine2,
+        orderDetails?.customer?.pincodeAreaName,
+        orderDetails?.customer?.district,
+        orderDetails?.customer?.state,
+        orderDetails?.customer?.pincode,
     ]
         .filter(addressPart => addressPart) // remove null/undefined/empty
         .join(", "); // join with space
@@ -170,37 +170,55 @@ const OrderDetailsScreen = ({ route, navigation }) => {
     const handleYesPress = async () => {
         setLoading(true)
         setOrderCompleteConfirmModdalVisible(false)
-        try {
-            // const agentId = await AsyncStorage.getItem('agentId');
-            const data = qs.stringify({
-                orderId,
-                agentId,
-                status: "Order Delivered",
-                signImage: null,
-                deliveryNote: "Delivered by agent",
-                deliveryFreebies: false,
-            });
+        // try {
+        //     // const agentId = await AsyncStorage.getItem('agentId');
+        //     const data = qs.stringify({
+        //         orderId,
+        //         agentId,
+        //         status: "Order Delivered",
+        //         signImage: null,
+        //         deliveryNote: "Delivered by agent",
+        //         deliveryFreebies: false,
+        //     });
 
-            const response = await completeOrderDelivery(
-                orderId,
-                agentId,
-                "Order Delivered",
-                null,
-                "Delivered by agent",
-                false
-            );
-            // setOrderDeliveredSuccessMessage(response.data.Message)
-            if (response.status === 200) {
+        //     const response = await completeOrderDelivery(
+        //         orderId,
+        //         agentId,
+        //         "Order Delivered",
+        //         null,
+        //         "Delivered by agent",
+        //         false
+        //     );
+        //     // setOrderDeliveredSuccessMessage(response.data.Message)
+        //     if (response.status === 200) {
+        //         setShowOrderDeliveredSuccessAlert(true)
+        //     }
+        //     // console.log("deliveryresponse", response)
+        //     // Alert.alert("Success", response.data.Message);
+        // } catch (error) {
+        //     console.error(error);
+        //     Alert.alert("Error", "Failed to update delivery status");
+        // }
+        // finally {
+        //     setLoading(false)
+        // }
+        try {
+            // const agentId = await AsyncStorage.getItem("agentId");
+            const response = await modifyOrderStatus(orderId, "delivered", currentLocation.latitude, currentLocation.longitude, null, null);
+            // console.log('resss', response.data)
+            if (response.data.success) {
+                // Re-fetch order details to refresh UI
+                // const refreshed = await fetchOrderDetails(orderId);
+                // setOrderDetails(response.data.data);
                 setShowOrderDeliveredSuccessAlert(true)
+            } else {
+                Alert.alert("Failed to update order status");
             }
-            // console.log("deliveryresponse", response)
-            // Alert.alert("Success", response.data.Message);
         } catch (error) {
             console.error(error);
-            Alert.alert("Error", "Failed to update delivery status");
-        }
-        finally {
-            setLoading(false)
+            Alert.alert("Error", "Failed to start delivery");
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -209,12 +227,12 @@ const OrderDetailsScreen = ({ route, navigation }) => {
         setLoading(true);
         try {
             // const agentId = await AsyncStorage.getItem("agentId");
-            const response = await modifyOrderStatus(orderId, agentId, "Order Dispatched");
+            const response = await modifyOrderStatus(orderId, "outfordelivery", currentLocation.latitude, currentLocation.longitude, null, null);
             // console.log('resss', response)
-            if (response.status === 200) {
+            if (response.data.success) {
                 // Re-fetch order details to refresh UI
                 const refreshed = await fetchOrderDetails(orderId);
-                setOrderDetails(refreshed.data.Data);
+                setOrderDetails(refreshed.data.data);
             } else {
                 Alert.alert("Failed to update order status");
             }
@@ -330,20 +348,20 @@ const OrderDetailsScreen = ({ route, navigation }) => {
                     <Text style={styles.sectionTitle}>Order Info</Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Order Number: </Text>
-                        {orderDetails?.OrderDetails?.orderNumber}
+                        {orderDetails?.order?.orderNumber}
                     </Text>
                     <Text style={styles.detailText}>
                         {/* {console.log('orderDetails.OrderDetails.payMethod', orderDetails.OrderDetails.PayMethod)} */}
                         <Text style={styles.label}>Payment Mode: </Text>
-                        {orderDetails?.OrderDetails?.PayMethod}
+                        {orderDetails?.order?.paymentMethod}
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Status: </Text>
-                        {orderDetails?.OrderDetails?.status}
+                        {orderDetails?.order?.orderStatusText}
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Order Placed Date and Time: </Text>
-                        {new Date(orderDetails?.OrderDetails?.orderDate).toLocaleDateString("en-GB", {
+                        {new Date(orderDetails?.order?.orderDate).toLocaleDateString("en-GB", {
                             day: "2-digit",
                             month: "short",
                             year: "2-digit",
@@ -354,7 +372,7 @@ const OrderDetailsScreen = ({ route, navigation }) => {
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Delivery Agent Accepted Date and Time: </Text>
-                        {new Date(orderDetails?.OrderDetails?.orderDelBoyAcceptDate).toLocaleDateString("en-GB", {
+                        {new Date(orderDetails?.order?.deliveryAgentAcceptedOn).toLocaleDateString("en-GB", {
                             day: "2-digit",
                             month: "short",
                             year: "2-digit",
@@ -371,8 +389,8 @@ const OrderDetailsScreen = ({ route, navigation }) => {
                         <Text style={styles.sectionTitle}>Customer Details</Text>
                         <TouchableOpacity
                             onPress={() => {
-                                if (orderDetails?.ShippingAddress?.phone) {
-                                    Linking.openURL(`tel:${orderDetails.ShippingAddress.phone}`);
+                                if (orderDetails?.customer?.phone) {
+                                    Linking.openURL(`tel:${orderDetails?.customer?.phone}`);
                                 } else {
                                     Alert.alert("Phone number not available");
                                 }
@@ -383,7 +401,7 @@ const OrderDetailsScreen = ({ route, navigation }) => {
                     </View>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Name: </Text>
-                        {customerName}
+                        {orderDetails?.customer?.custName}
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Address: </Text>
@@ -391,11 +409,11 @@ const OrderDetailsScreen = ({ route, navigation }) => {
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Landmark: </Text>
-                        {orderDetails?.ShippingAddress?.landmark}
+                        {orderDetails?.customer?.landmark}
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Phone No: </Text>
-                        {orderDetails?.ShippingAddress?.phone}
+                        {orderDetails?.customer?.phone}
                     </Text>
                 </View>
 
@@ -414,14 +432,14 @@ const OrderDetailsScreen = ({ route, navigation }) => {
 
                     {/* Items */}
                     <FlatList
-                        data={orderDetails?.OrderItemsDetails}
+                        data={orderDetails?.items}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) => (
                             <View style={styles.itemRow}>
-                                <Text style={[styles.itemText, { flex: 2 }]}>{item.prName}</Text>
+                                <Text style={[styles.itemText, { flex: 2 }]}>{item.productName}</Text>
                                 <Text style={[styles.itemText, { flex: 1, textAlign: "center" }]}>{item.sku}</Text>
-                                <Text style={[styles.itemText, { flex: 1, textAlign: "center" }]}>₹{item.productPrice}</Text>
-                                <Text style={[styles.itemText, { flex: 1, textAlign: "center" }]}>{item.qty}</Text>
+                                <Text style={[styles.itemText, { flex: 1, textAlign: "center" }]}>₹{item.lineTotal}</Text>
+                                <Text style={[styles.itemText, { flex: 1, textAlign: "center" }]}>{item.quantity}</Text>
                             </View>
                         )}
                     />
@@ -432,26 +450,34 @@ const OrderDetailsScreen = ({ route, navigation }) => {
                     <Text style={styles.sectionTitle}>Order Summary</Text>
                     <View style={styles.summaryRow}>
                         <Text style={styles.label}>Sub Total:</Text>
-                        <Text style={styles.value}>₹{orderDetails?.OrderDetails?.subTotal}</Text>
+                        <Text style={styles.value}>₹{orderDetails?.summary?.subtotal}</Text>
+                    </View>
+                    <View style={styles.summaryRow}>
+                        <Text style={styles.label}>Tax Total:</Text>
+                        <Text style={styles.value}>₹{orderDetails?.summary?.taxTotal}</Text>
                     </View>
                     <View style={styles.summaryRow}>
                         <Text style={styles.label}>Discount:</Text>
-                        <Text style={styles.value}>₹{orderDetails?.OrderDetails?.orderDiscount}</Text>
+                        <Text style={styles.value}>₹{orderDetails?.summary?.discountTotal}</Text>
                     </View>
                     <View style={styles.summaryRow}>
                         <Text style={styles.label}>Delivery Charge:</Text>
-                        <Text style={styles.value}>₹{orderDetails?.OrderDetails?.orderDeliveryCharge}</Text>
+                        <Text style={styles.value}>₹{orderDetails?.summary?.deliveryCharge}</Text>
                     </View>
                     <View style={styles.summaryRow}>
                         <Text style={styles.label}>Grand Total:</Text>
-                        <Text style={styles.value}>₹{orderDetails?.OrderDetails?.orderAmount}</Text>
+                        <Text style={styles.value}>₹{orderDetails?.summary?.grandTotal}</Text>
                     </View>
                     <View style={[styles.summaryRow, { marginTop: 10 }]}>
                         <Text style={[styles.label, { fontFamily: Fonts.OpenSansBold }]}>
                             Amount to be Collected:
                         </Text>
                         <Text style={[styles.value, { fontFamily: Fonts.OpenSansBold }]}>
-                            ₹{orderDetails?.OrderDetails?.orderAmount}
+                            ₹{
+                                // (Number(orderDetails?.summary?.grandTotal || 0) +
+                                //     Number(orderDetails?.summary?.deliveryCharge || 0)).toFixed(2)
+                                orderDetails?.summary?.grandTotal
+                            }
                         </Text>
                     </View>
                 </View>
@@ -481,7 +507,7 @@ const OrderDetailsScreen = ({ route, navigation }) => {
                 </View>
             )} */}
             <View style={styles.bottomContainer}>
-                {orderDetails?.OrderDetails?.status === "Delivery Agent Accepted" && (
+                {orderDetails?.order?.orderStatusKey === "deliveryagentaccepted" && (
                     <TouchableOpacity
                         style={[styles.bottomButton, { backgroundColor: AppColors.green }]}
                         onPress={() => setStartConfirmModalVisible(true)}
@@ -489,7 +515,7 @@ const OrderDetailsScreen = ({ route, navigation }) => {
                         <Text style={styles.bottomButtonText}>Start</Text>
                     </TouchableOpacity>
                 )}
-                {orderDetails?.OrderDetails?.status === "Order Dispatched" && (
+                {orderDetails?.order?.orderStatusKey === "outfordelivery" && (
                     <>
                         <TouchableOpacity
                             style={[styles.bottomButton, { backgroundColor: AppColors.blue }]}

@@ -25,7 +25,7 @@ import { Fonts } from '../constants/Fonts';
 import firestore from '@react-native-firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { fetchAgentDetails } from '../redux/slices/agentSlice';
-import { forgotPwd, login } from '../services/api/api';
+import { forgotPwd, login, sendOtp } from '../services/api/api';
 
 const { width } = Dimensions.get('window');
 
@@ -37,6 +37,7 @@ const ForgotPwdScreen = props => {
     const [showSuccessAlert, setShowSuccessAlert] = useState(false);
     const [showInvalidAlert, setShownvalidAlert] = useState(false);
     const [otpurlkey, setOtpurlkey] = useState(null);
+    const [otpType, setOtpType] = useState(null)
 
     // const { phoneNumber, setPhoneNumber } = useContext(ItemContext);
 
@@ -45,10 +46,12 @@ const ForgotPwdScreen = props => {
     const handleSendOtp = async () => {
         setLoading(true);
         try {
-            const response = await forgotPwd(mobileNo);
+            const response = await sendOtp(mobileNo);
+            // console.log('resFor', response.data)
             const res = response.data;
-            if (res?.Data) {
+            if (res?.success) {
                 setOtpurlkey(res?.Data)
+                // setOtpType
                 setShowSuccessAlert(true)
             } else {
                 setShownvalidAlert(true)

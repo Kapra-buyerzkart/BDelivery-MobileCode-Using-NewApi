@@ -98,13 +98,13 @@ export const fetchAgentDetails = createAsyncThunk(
     async (_, thunkAPI) => {
         try {
             // Get agentId from AsyncStorage
-            const agentId = await AsyncStorage.getItem('agentId');
-            if (!agentId) {
-                throw new Error('Agent ID not found in storage');
-            }
+            // const agentId = await AsyncStorage.getItem('agentId');
+            // if (!agentId) {
+            //     throw new Error('Agent ID not found in storage');
+            // }
 
             // ✅ Call API
-            const response = await fetchProfileDetails(agentId);
+            const response = await fetchProfileDetails();
 
             // API structure:
             // {
@@ -116,8 +116,8 @@ export const fetchAgentDetails = createAsyncThunk(
             //   },
             //   "Message": "Profile fetched"
             // }
-
-            const data = response.data?.Data;
+            // console.log('profileresponse', response.data)
+            const data = response.data?.data;
             if (!data) {
                 throw new Error('Invalid response data');
             }
@@ -137,6 +137,12 @@ const agentSlice = createSlice({
         email: '',
         phoneNo: '',
         superMarketName: '',
+        location: {
+            latitude: null,
+            longitude: null,
+            accuracy: null,
+            updatedAt: null,
+        },
         status: 'idle',
         error: null,
     },
@@ -147,8 +153,23 @@ const agentSlice = createSlice({
             state.email = '';
             state.phoneNo = '';
             state.superMarketName = '';
+            state.location = {
+                latitude: null,
+                longitude: null,
+                accuracy: null,
+                updatedAt: null,
+            };
             state.status = 'idle';
             state.error = null;
+        },
+        updateAgentLocation: (state, action) => {
+            const { latitude, longitude, accuracy } = action.payload;
+            state.location = {
+                latitude,
+                longitude,
+                accuracy,
+                updatedAt: Date.now(),
+            };
         },
     },
     extraReducers: (builder) => {
@@ -159,11 +180,11 @@ const agentSlice = createSlice({
             .addCase(fetchAgentDetails.fulfilled, (state, action) => {
                 const data = action.payload;
                 state.status = 'succeeded';
-                state.agentId = data.agentId;
-                state.name = data.agentName;
+                state.agentId = data.deliveryAgentId;
+                state.name = data.fullName;
                 state.email = data.emailId;
                 state.phoneNo = data.phoneNo;
-                state.superMarketName = data.SuperMarketName;
+                state.superMarketName = data.storeName;
             })
             .addCase(fetchAgentDetails.rejected, (state, action) => {
                 state.status = 'failed';
@@ -172,6 +193,6 @@ const agentSlice = createSlice({
     },
 });
 
-export const { clearAgentDetails } = agentSlice.actions;
+export const { clearAgentDetails, updateAgentLocation } = agentSlice.actions;
 export default agentSlice.reducer;
 

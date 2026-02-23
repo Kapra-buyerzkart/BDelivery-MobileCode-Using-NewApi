@@ -54,12 +54,12 @@ export default function AttendanceScreen() {
             setLoading(true)
             try {
                 const { startDate, endDate } = getDateRange();
-                const res = await fetchAttendance(agentId, startDate, endDate);
-                const records = res?.data?.data || [];
+                const res = await fetchAttendance(startDate, endDate);
+                const records = res?.data?.data?.dayWise || [];
 
                 if (records.length > 0) {
                     const lastRecord = records[records.length - 1];
-                    if (lastRecord.status === 'PUNCH IN') {
+                    if (lastRecord.outTime === null) {
                         setPunchType('punchOut');
                     } else {
                         setPunchType('punchIn');
@@ -75,7 +75,7 @@ export default function AttendanceScreen() {
         };
 
         loadPunchStatus();
-    }, [agentId]);
+    }, []);
 
     // ✅ Request location permission
     useEffect(() => {
@@ -122,8 +122,8 @@ export default function AttendanceScreen() {
 
         setLoading(true);
         try {
-            const status = punchType === 'punchIn' ? 'PUNCH IN' : 'PUNCH OUT';
-            const res = await markAttendance(agentId, status, longitude, latitude);
+            const status = punchType === 'punchIn' ? 'IN' : 'OUT';
+            const res = await markAttendance(status, latitude, longitude);
 
             if (res.data.success) {
                 setShowSuccessAlert(true);

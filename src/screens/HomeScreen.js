@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
     View, Text, StyleSheet, SafeAreaView, TouchableOpacity, Modal, Switch,
     Alert, LayoutAnimation, UIManager, Platform, ScrollView, RefreshControl,
-    FlatList
+    FlatList,
+    PermissionsAndroid
 } from 'react-native';
 import Entypo from 'react-native-vector-icons/Entypo';
 import { AppColors } from '../constants/Colors';
@@ -18,6 +19,7 @@ import firestore from '@react-native-firebase/firestore';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchAgentDetails } from '../redux/slices/agentSlice';
 import { useFocusEffect } from '@react-navigation/native';
+import Geolocation from '@react-native-community/geolocation';
 
 // Enable layout animation on Android
 if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
@@ -28,6 +30,7 @@ const HomeScreen = ({ navigation }) => {
     const [activeTab, setActiveTab] = useState('PENDING');
     const [ordersByArea, setOrdersByArea] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [locationLoading, setLocationLoading] = useState(true);
     const [refreshing, setRefreshing] = useState(false);
     const [agentId, setAgentId] = useState(null);
     const [isOnDuty, setIsOnDuty] = useState(false);
@@ -36,10 +39,57 @@ const HomeScreen = ({ navigation }) => {
     const [expandedAreas, setExpandedAreas] = useState([]);
     const [startConfirmModalVisible, setStartConfirmModalVisible] = useState(false);
     const [loadingArea, setLoadingArea] = useState(null);
+    const [currentLocation, setCurrentLocation] = useState(null);
 
     const drawerRef = useRef(null);
     const dispatch = useDispatch();
     const agent = useSelector((state) => state.agent);
+
+    useEffect(() => {
+        const requestLocationPermission = async () => {
+            try {
+                if (Platform.OS === 'android') {
+                    const granted = await PermissionsAndroid.request(
+                        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION
+                    );
+
+                    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+                        getLocation();
+                    } else {
+                        console.warn('Location permission denied');
+                        setLocationLoading(false);
+                    }
+                } else {
+                    getLocation();
+                }
+            } catch (error) {
+                console.error('Permission request error:', error);
+                setLocationLoading(false);
+            }
+        };
+
+        const getLocation = () => {
+            Geolocation.getCurrentPosition(
+                (position) => {
+                    setCurrentLocation({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude,
+                    });
+                    setLocationLoading(false);
+                },
+                (error) => {
+                    console.error('Location error:', error);
+                },
+                {
+                    enableHighAccuracy: false,
+                    timeout: 30000,
+                    maximumAge: 10000,
+                }
+            );
+        };
+
+        requestLocationPermission();
+    }, []);
 
     useEffect(() => {
         (async () => {
@@ -54,19 +104,20 @@ const HomeScreen = ({ navigation }) => {
 
     const getStatus = () => {
         switch (activeTab) {
-            case 'PENDING': return 'Order Packed';
-            case 'DELIVERING': return 'Delivery Agent Accepted';
-            case 'DELIVERED': return 'Order Delivered';
+            case 'PENDING': return 'pending';
+            case 'DELIVERING': return 'delivering';
+            case 'DELIVERED': return 'delivered';
             default: return '';
         }
     };
 
     const fetchOrders = async (showLoader = true) => {
-        if (!agentId) return;
+        // if (!agentId) return;
         if (showLoader) setLoading(true);
         try {
-            const res = await getAllOrders(agentId, getStatus());
-            setOrdersByArea(res?.data || []);
+            const res = await getAllOrders(getStatus());
+            // console.log('ordersres', res?.data.data.items)
+            setOrdersByArea(res?.data?.data?.items || []);
         } catch (err) {
             console.error('Error fetching orders:', err);
         } finally {
@@ -78,7 +129,7 @@ const HomeScreen = ({ navigation }) => {
     useFocusEffect(
         useCallback(() => {
             fetchOrders();
-        }, [activeTab, agentId])
+        }, [activeTab])
     );
 
     const handleAcceptPress = (order) => {
@@ -92,10 +143,14 @@ const HomeScreen = ({ navigation }) => {
             setLoading(true);
             const res = await modifyOrderStatus(
                 selectedOrder.orderId,
-                selectedOrder.agentId,
-                "Delivery Agent Accepted"
+                "deliveryagentaccepted",
+                currentLocation.latitude,
+                currentLocation.longitude,
+                null,
+                null
             );
-            if (res.status === 200) {
+            // console.log('resssss', res.data)
+            if (res.data.success) {
                 navigation.navigate("OrderDetails", { orderId: selectedOrder.orderId });
             } else {
                 Alert.alert("Something went wrong");
@@ -141,7 +196,9 @@ const HomeScreen = ({ navigation }) => {
         fetchOrders(false); // avoid showing main loader when refreshing
     }, [activeTab, agentId]);
 
-    if (loading && !refreshing) return <LoaderComponent />;
+    if ((loading && !refreshing) || locationLoading) {
+        return <LoaderComponent />;
+    }
 
     return (
         <Drawer
@@ -153,9 +210,10 @@ const HomeScreen = ({ navigation }) => {
             styles={drawerStyles}
         >
             <SafeAreaView style={styles.container}>
-
+                {/* {console.log('currentLocation', currentLocation)} */}
                 {/* Top Bar */}
                 <View style={styles.topBar}>
+                    {/* {console.log('ordersByArea', ordersByArea)} */}
                     <TouchableOpacity onPress={() => drawerRef.current?.open()}>
                         <Entypo name="menu" size={33} color={AppColors.whiteColor} />
                     </TouchableOpacity>
@@ -204,24 +262,24 @@ const HomeScreen = ({ navigation }) => {
                         <EmptyComponent text="NO ORDERS FOUND" />
                     ) : (
                         ordersByArea.map((areaGroup) => (
-                            <View key={areaGroup.area} style={styles.areaSection}>
+                            <View key={areaGroup.pincodeAreaName} style={styles.areaSection}>
                                 <TouchableOpacity
                                     style={styles.areaCard}
-                                    onPress={() => toggleAreaExpand(areaGroup.area)}
+                                    onPress={() => toggleAreaExpand(areaGroup.pincodeAreaName)}
                                 >
-                                    <Text style={styles.areaTitle}>{areaGroup.area}</Text>
+                                    <Text style={styles.areaTitle}>{areaGroup.pincodeAreaName}</Text>
                                     <Entypo
-                                        name={expandedAreas.includes(areaGroup.area) ? 'chevron-up' : 'chevron-down'}
+                                        name={expandedAreas.includes(areaGroup.pincodeAreaName) ? 'chevron-up' : 'chevron-down'}
                                         size={20}
                                         color={AppColors.black}
                                     />
                                 </TouchableOpacity>
 
-                                {loadingArea === areaGroup.area ? (
+                                {loadingArea === areaGroup.pincodeAreaName ? (
                                     <View style={{ paddingVertical: 15 }}>
                                         <LoaderComponent small /> {/* 👈 make sure LoaderComponent supports small loader */}
                                     </View>
-                                ) : expandedAreas.includes(areaGroup.area) ? (
+                                ) : expandedAreas.includes(areaGroup.pincodeAreaName) ? (
                                     <FlatList
                                         data={areaGroup.orders}
                                         keyExtractor={(item) => item.orderId.toString()}

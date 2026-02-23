@@ -10,7 +10,7 @@ import AlertComponent from '../components/AlertComponent';
 const { width } = Dimensions.get('window');
 
 const OtpVerifyScreen = (props) => {
-    const { mobileNo, otpurlkey } = props.route.params;
+    const { mobileNo, otpType } = props.route.params;
     const [otp, setOtp] = useState(null);
     const [loading, setLoading] = useState(false);
     const [showOtpEmptyAlert, setShowOtpEmptyAlert] = useState(false)
@@ -23,18 +23,22 @@ const OtpVerifyScreen = (props) => {
     const [resendOtpFailMessage, setResendOtpFailMessage] = useState('')
     const [resendTimer, setResendTimer] = useState(60);
     const [agentId, setAgentId] = useState(null);
+    const [resetToken, setResetToken] = useState(null)
 
     const handleVerifyOtp = async () => {
 
         setLoading(true);
         try {
             // console.log(mobileNo)
-            const response = await verifyOtp(mobileNo, otp, otpurlkey);
+            const response = await verifyOtp(mobileNo, otp, otpType);
             const res = response.data;
 
-            if (res?.AgentId) {
-                setAgentId(res.AgentId)
-                setSuccessAlertMessage(res.Message)
+            console.log('verifyotpres', res)
+
+            if (res?.success) {
+                // setAgentId(res.AgentId)
+                setResetToken(res?.data?.resetToken)
+                setSuccessAlertMessage(res?.message)
                 setShowSuccessAlert(true)
             } else {
                 setShowFailAlert(true)
@@ -92,7 +96,7 @@ const OtpVerifyScreen = (props) => {
                 okClick={() => {
                     setShowSuccessAlert(false)
                     props.navigation.navigate("ResetPwd", {
-                        agentIdFromOtp: agentId
+                        resetToken
                     })
                 }}
             />

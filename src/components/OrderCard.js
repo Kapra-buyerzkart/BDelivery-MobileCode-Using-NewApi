@@ -28,14 +28,27 @@ const OrderCard = ({
 
     const renderButton = () => {
         if (type === 'PENDING') {
-            return (
-                <TouchableOpacity
-                    style={[styles.button, { backgroundColor: AppColors.green }]}
-                    onPress={() => onAccept && onAccept({ orderId: order.orderId, orderNumber: order.orderNumber, agentId: order.delAgentId })}
-                >
-                    <Text style={styles.buttonText}>Accept</Text>
-                </TouchableOpacity>
-            );
+            if (order.isAssignedToMe === 1) {
+                return (
+                    <TouchableOpacity
+                        style={[styles.button, { backgroundColor: AppColors.green }]}
+                        onPress={() => onAccept && onAccept({ orderId: order.orderId, orderNumber: order.orderNumber, agentId: order.delAgentId })}
+                    >
+                        <Text style={styles.buttonText}>Accept</Text>
+                    </TouchableOpacity>
+                );
+            }
+            else {
+                return (
+                    <TouchableOpacity
+                        disabled={true}
+                        style={[styles.button, { backgroundColor: AppColors.gray }]}
+                        onPress={() => onAccept && onAccept({ orderId: order.orderId, orderNumber: order.orderNumber, agentId: order.delAgentId })}
+                    >
+                        <Text style={styles.buttonText}>Accept</Text>
+                    </TouchableOpacity>
+                );
+            }
         } else if (type === "DELIVERING") {
             // Both DELIVERING & DELIVERED
             return (
@@ -73,7 +86,7 @@ const OrderCard = ({
 
             <View style={styles.orderTitleView}>
                 <Text style={styles.label}>Area:</Text>
-                <Text style={styles.value}>{order.area}</Text>
+                <Text style={styles.value}>{order.pincodeAreaName}</Text>
             </View>
 
             {/* Only for DELIVERED */}
@@ -87,13 +100,13 @@ const OrderCard = ({
                     <View style={styles.orderTitleView}>
                         <Text style={styles.label}>Delivered Date:</Text>
                         <Text style={styles.value}>
-                            {new Date(order.deliveredOn).toLocaleDateString("en-GB", {
+                            {new Date(order.orderDate).toLocaleDateString("en-GB", {
                                 day: "2-digit",
                                 month: "short",
                                 year: "2-digit",
-                                hour: "2-digit",
-                                minute: "2-digit",
-                                hour12: true,
+                                // hour: "2-digit",
+                                // minute: "2-digit",
+                                // hour12: true,
                             })}
                         </Text>
                     </View>

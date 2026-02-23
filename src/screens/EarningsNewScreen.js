@@ -33,6 +33,8 @@ export default function EarningsNewScreen() {
     const [loading, setLoading] = useState(false);
     const [earningsList, setEarningsList] = useState([]);
     const [totalEarnings, setTotalEarnings] = useState(0);
+    const [totalPaid, setTotalPaid] = useState(0);
+    const [totalPending, setTotalPending] = useState(0);
 
     const formatDate = (date) => {
         const day = String(date.getDate()).padStart(2, "0");
@@ -60,11 +62,13 @@ export default function EarningsNewScreen() {
             const end = formatDateTwo(endDate);
             // console.log("sta", start)
             // console.log("end", end)
-            const res = await fetchEarnings(agentId, start, end);
-            // console.log('res', res.data)
+            const res = await fetchEarnings(start, end);
+            // console.log('res', res.data.data)
             if (res.data.success) {
-                setEarningsList(res.data.data);
-                setTotalEarnings(res.data.totalEarnings || 0);
+                setEarningsList(res.data.data.items);
+                setTotalEarnings(res.data.data.totals.totalEarnings || 0);
+                setTotalPaid(res.data.data.totals.totalPaid || 0);
+                setTotalPending(res.data.data.totals.totalPending || 0);
             } else {
                 Alert.alert("Error", "Failed to fetch earnings.");
             }
@@ -115,8 +119,9 @@ export default function EarningsNewScreen() {
     //     if (selectedDate) setEndDate(selectedDate);
     // };
 
+
     const renderItem = ({ item }) => {
-        const dateObj = new Date(item.created_at);
+        const dateObj = new Date(item.createdAt);
         const dateStr = dateObj.toLocaleDateString("en-GB", {
             day: "2-digit",
             month: "short",
@@ -146,9 +151,6 @@ export default function EarningsNewScreen() {
             <Text style={styles.title}>Earnings</Text>
 
             {/* Total Earnings Badge */}
-            <View style={styles.badgeContainer}>
-                <Text style={styles.badgeText}>Total Earnings: ₹{totalEarnings.toFixed(2)}</Text>
-            </View>
 
             {/* Date Pickers */}
             <View style={styles.dateContainer}>
@@ -175,6 +177,36 @@ export default function EarningsNewScreen() {
                 </TouchableOpacity>
             </View>
 
+            <View style={{
+                flexDirection: 'row',
+                justifyContent: "space-evenly",
+                marginBottom: 5
+            }}>
+                <View style={styles.badgeContainer}>
+                    <Text style={styles.badgeText}>Earnings:</Text>
+                    <Text style={{
+                        fontFamily: Fonts.OpenSansSemiBold,
+                        fontSize: 13,
+                        color: AppColors.whiteColor
+                    }}>₹{totalEarnings.toFixed(2)}</Text>
+                </View>
+                <View style={styles.badgeContainer}>
+                    <Text style={styles.badgeText}>Paid:</Text>
+                    <Text style={{
+                        fontFamily: Fonts.OpenSansSemiBold,
+                        fontSize: 13,
+                        color: AppColors.whiteColor
+                    }}>₹{totalPaid.toFixed(2)}</Text>
+                </View>
+                <View style={styles.badgeContainer}>
+                    <Text style={styles.badgeText}>Pending:</Text>
+                    <Text style={{
+                        fontFamily: Fonts.OpenSansSemiBold,
+                        fontSize: 13,
+                        color: AppColors.whiteColor
+                    }}>₹{totalPending.toFixed(2)}</Text>
+                </View>
+            </View>
             {showStartPicker && (
                 <DateTimePicker
                     value={startDate}
@@ -210,7 +242,7 @@ export default function EarningsNewScreen() {
                     {/* Table Data */}
                     <FlatList
                         data={earningsList}
-                        keyExtractor={(item) => item.order_id.toString()}
+                        keyExtractor={(item, index) => index.toString()}
                         renderItem={renderItem}
                         ListEmptyComponent={
                             <Text style={styles.emptyText}>No earnings records found.</Text>
@@ -246,20 +278,25 @@ const styles = StyleSheet.create({
     },
     badgeContainer: {
         backgroundColor: AppColors.primaryColor,
-        padding: 10,
         borderRadius: 10,
-        alignSelf: "center",
-        marginBottom: 16,
+        // alignSelf: "center",
+        // marginBottom: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: 73,
+        height: 52
     },
     badgeText: {
         color: AppColors.whiteColor,
-        fontFamily: Fonts.OpenSansSemiBold,
-        fontSize: 16,
+        fontFamily: Fonts.OpenSansRegular,
+        fontSize: 13,
+        textAlign: 'center'
     },
     dateContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
         marginBottom: 20,
+        marginTop: 10
     },
     dateButton: {
         backgroundColor: AppColors.primaryColor,
@@ -289,11 +326,12 @@ const styles = StyleSheet.create({
         textAlign: "center",
         color: AppColors.whiteColor,
         fontFamily: Fonts.OpenSansRegular,
-        fontSize: RFValue(11, 680),
+        fontSize: 11,
     },
     headerText: {
         fontFamily: Fonts.OpenSansSemiBold,
         color: AppColors.whiteColor,
+        fontSize: 11
     },
     emptyText: {
         textAlign: "center",

@@ -41,7 +41,7 @@ const OrderDeliveredDetailsScreen = ({ route, navigation }) => {
             try {
                 const response = await fetchOrderDetails(orderId);
                 // console.log("Order details:", response.data);
-                setOrderDetails(response.data.Data);
+                setOrderDetails(response.data.data);
             } catch (error) {
                 console.error("Error fetching order details:", error);
             } finally {
@@ -138,12 +138,13 @@ const OrderDeliveredDetailsScreen = ({ route, navigation }) => {
         .join(" "); // join with space
 
     const address = [
-        orderDetails?.ShippingAddress?.addLine1,
-        orderDetails?.ShippingAddress?.addLine2,
-        orderDetails?.ShippingAddress?.addLine3,
-        orderDetails?.ShippingAddress?.area,
-        orderDetails?.ShippingAddress?.district,
-        orderDetails?.ShippingAddress?.pincode,
+        orderDetails?.customer?.addLine1,
+        orderDetails?.customer?.addLine2,
+        orderDetails?.customer?.pincodeAreaName,
+        orderDetails?.customer?.district,
+        orderDetails?.customer?.state,
+        orderDetails?.customer?.pincode
+        // orderDetails?.ShippingAddress?.pincode,
     ]
         .filter(addressPart => addressPart) // remove null/undefined/empty
         .join(", "); // join with space
@@ -257,20 +258,20 @@ const OrderDeliveredDetailsScreen = ({ route, navigation }) => {
                     <Text style={styles.sectionTitle}>Order Info</Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Order Number: </Text>
-                        {orderDetails?.OrderDetails?.orderNumber}
+                        {orderDetails?.order?.orderNumber}
                     </Text>
                     <Text style={styles.detailText}>
                         {/* {console.log('orderDetails.OrderDetails.payMethod', orderDetails.OrderDetails.PayMethod)} */}
                         <Text style={styles.label}>Payment Mode: </Text>
-                        {orderDetails?.OrderDetails?.PayMethod}
+                        {orderDetails?.order?.paymentMethod}
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Status: </Text>
-                        {orderDetails?.OrderDetails?.status}
+                        {orderDetails?.order?.orderStatusText}
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Order Placed Date and Time: </Text>
-                        {new Date(orderDetails?.OrderDetails?.orderDate).toLocaleDateString("en-GB", {
+                        {new Date(orderDetails?.order?.orderDate).toLocaleDateString("en-GB", {
                             day: "2-digit",
                             month: "short",
                             year: "2-digit",
@@ -281,7 +282,7 @@ const OrderDeliveredDetailsScreen = ({ route, navigation }) => {
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Delivery Agent Accepted Date and Time: </Text>
-                        {new Date(orderDetails?.OrderDetails?.orderDelBoyAcceptDate).toLocaleDateString("en-GB", {
+                        {new Date(orderDetails?.order?.deliveryAgentAcceptedOn).toLocaleDateString("en-GB", {
                             day: "2-digit",
                             month: "short",
                             year: "2-digit",
@@ -292,7 +293,7 @@ const OrderDeliveredDetailsScreen = ({ route, navigation }) => {
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Order Delivered Date and Time: </Text>
-                        {new Date(orderDetails?.OrderDetails?.orderDeliveredDate).toLocaleDateString("en-GB", {
+                        {new Date(orderDetails?.order?.deliveredAt).toLocaleDateString("en-GB", {
                             day: "2-digit",
                             month: "short",
                             year: "2-digit",
@@ -309,8 +310,8 @@ const OrderDeliveredDetailsScreen = ({ route, navigation }) => {
                         <Text style={styles.sectionTitle}>Customer Details</Text>
                         <TouchableOpacity
                             onPress={() => {
-                                if (orderDetails?.ShippingAddress?.phone) {
-                                    Linking.openURL(`tel:${orderDetails.ShippingAddress.phone}`);
+                                if (orderDetails?.customer?.phone) {
+                                    Linking.openURL(`tel:${orderDetails.customer.phone}`);
                                 } else {
                                     Alert.alert("Phone number not available");
                                 }
@@ -321,7 +322,7 @@ const OrderDeliveredDetailsScreen = ({ route, navigation }) => {
                     </View>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Name: </Text>
-                        {customerName}
+                        {orderDetails?.customer?.custName}
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Address: </Text>
@@ -329,11 +330,11 @@ const OrderDeliveredDetailsScreen = ({ route, navigation }) => {
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Landmark: </Text>
-                        {orderDetails?.ShippingAddress?.landmark}
+                        {orderDetails?.customer?.landmark}
                     </Text>
                     <Text style={styles.detailText}>
                         <Text style={styles.label}>Phone No: </Text>
-                        {orderDetails?.ShippingAddress?.phone}
+                        {orderDetails?.customer?.phone}
                     </Text>
                 </View>
 
@@ -352,14 +353,14 @@ const OrderDeliveredDetailsScreen = ({ route, navigation }) => {
 
                     {/* Items */}
                     <FlatList
-                        data={orderDetails?.OrderItemsDetails}
+                        data={orderDetails?.items}
                         keyExtractor={(item, index) => index.toString()}
                         renderItem={({ item }) => (
                             <View style={styles.itemRow}>
-                                <Text style={[styles.itemText, { flex: 2 }]}>{item.prName}</Text>
+                                <Text style={[styles.itemText, { flex: 2 }]}>{item.productName}</Text>
                                 <Text style={[styles.itemText, { flex: 1, textAlign: "center" }]}>{item.sku}</Text>
-                                <Text style={[styles.itemText, { flex: 1, textAlign: "center" }]}>₹{item.productPrice}</Text>
-                                <Text style={[styles.itemText, { flex: 1, textAlign: "center" }]}>{item.qty}</Text>
+                                <Text style={[styles.itemText, { flex: 1, textAlign: "center" }]}>₹{item.lineTotal}</Text>
+                                <Text style={[styles.itemText, { flex: 1, textAlign: "center" }]}>{item.quantity}</Text>
                             </View>
                         )}
                     />
@@ -370,26 +371,30 @@ const OrderDeliveredDetailsScreen = ({ route, navigation }) => {
                     <Text style={styles.sectionTitle}>Order Summary</Text>
                     <View style={styles.summaryRow}>
                         <Text style={styles.label}>Sub Total:</Text>
-                        <Text style={styles.value}>₹{orderDetails?.OrderDetails?.subTotal}</Text>
+                        <Text style={styles.value}>₹{orderDetails?.summary?.subtotal}</Text>
                     </View>
                     <View style={styles.summaryRow}>
                         <Text style={styles.label}>Discount:</Text>
-                        <Text style={styles.value}>₹{orderDetails?.OrderDetails?.orderDiscount}</Text>
+                        <Text style={styles.value}>₹{orderDetails?.summary?.discountTotal}</Text>
                     </View>
                     <View style={styles.summaryRow}>
                         <Text style={styles.label}>Delivery Charge:</Text>
-                        <Text style={styles.value}>₹{orderDetails?.OrderDetails?.orderDeliveryCharge}</Text>
+                        <Text style={styles.value}>₹{orderDetails?.summary?.deliveryCharge}</Text>
                     </View>
                     <View style={styles.summaryRow}>
                         <Text style={styles.label}>Grand Total:</Text>
-                        <Text style={styles.value}>₹{orderDetails?.OrderDetails?.orderAmount}</Text>
+                        <Text style={styles.value}>₹{orderDetails?.summary?.grandTotal}</Text>
                     </View>
                     <View style={[styles.summaryRow, { marginTop: 10 }]}>
                         <Text style={[styles.label, { fontFamily: Fonts.OpenSansBold }]}>
                             Amount to be Collected:
                         </Text>
                         <Text style={[styles.value, { fontFamily: Fonts.OpenSansBold }]}>
-                            ₹{orderDetails?.OrderDetails?.orderAmount}
+                            ₹{
+                                // (Number(orderDetails?.summary?.grandTotal || 0) +
+                                //     Number(orderDetails?.summary?.deliveryCharge || 0)).toFixed(2)
+                                orderDetails?.summary?.grandTotal
+                            }
                         </Text>
                     </View>
                 </View>

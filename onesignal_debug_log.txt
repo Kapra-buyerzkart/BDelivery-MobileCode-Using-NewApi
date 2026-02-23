@@ -1,0 +1,317 @@
+--------- beginning of main
+11-14 14:38:30.056 26280 27057 W ReactNativeJS: Warning: Drawer uses the legacy childContextTypes API which is no longer supported. Use React.createContext() instead.
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Drawer (created by HomeScreen)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in HomeScreen (created by SceneView)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in StaticContainer
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in EnsureSingleNavigator (created by SceneView)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in SceneView (created by NativeStackNavigator)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in RNSScreenContentWrapper (created by ScreenContentWrapper)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in ScreenContentWrapper (created by DebugContainer)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in DebugContainer
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in RNSScreen (created by Animated(Anonymous))
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Animated(Anonymous)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in DelayedFreeze
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in InnerScreen (created by Screen)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Screen
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in ScreenStackItem (created by SceneView)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in SceneView (created by NativeStackView)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in DelayedFreeze (created by ScreenStack)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in RNSScreenStack (created by ScreenStack)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Unknown (created by ScreenStack)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in ScreenStack (created by NativeStackView)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in RNCSafeAreaProvider (created by SafeAreaProvider)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in SafeAreaProvider (created by SafeAreaProviderCompat)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in SafeAreaProviderCompat (created by NativeStackView)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in NativeStackView (created by NativeStackNavigator)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in PreventRemoveProvider (created by NavigationContent)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in NavigationContent
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Unknown (created by NativeStackNavigator)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in NativeStackNavigator (created by Container)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in ThemeProvider
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in EnsureSingleNavigator
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in BaseNavigationContainer
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in NavigationContainerInner (created by Container)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Container (created by App)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in Provider (created by App)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in App
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in AppContainer
+11-14 14:38:30.056 26280 27057 W ReactNativeJS:     in BDelivery(RootComponent)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS: Warning: Drawer uses the legacy contextTypes API which is no longer supported. Use React.createContext() with static contextType instead.
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Drawer (created by HomeScreen)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in HomeScreen (created by SceneView)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in StaticContainer
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in EnsureSingleNavigator (created by SceneView)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in SceneView (created by NativeStackNavigator)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in RNSScreenContentWrapper (created by ScreenContentWrapper)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in ScreenContentWrapper (created by DebugContainer)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in DebugContainer
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in RNSScreen (created by Animated(Anonymous))
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Animated(Anonymous)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in DelayedFreeze
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in InnerScreen (created by Screen)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Screen
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in ScreenStackItem (created by SceneView)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in SceneView (created by NativeStackView)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in DelayedFreeze (created by ScreenStack)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in RNSScreenStack (created by ScreenStack)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Unknown (created by ScreenStack)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in ScreenStack (created by NativeStackView)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in RNCSafeAreaProvider (created by SafeAreaProvider)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in SafeAreaProvider (created by SafeAreaProviderCompat)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in SafeAreaProviderCompat (created by NativeStackView)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in NativeStackView (created by NativeStackNavigator)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in PreventRemoveProvider (created by NavigationContent)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in NavigationContent
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Unknown (created by NativeStackNavigator)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in NativeStackNavigator (created by Container)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in ThemeProvider
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in EnsureSingleNavigator
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in BaseNavigationContainer
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in NavigationContainerInner (created by Container)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Container (created by App)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in Provider (created by App)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in App
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in AppContainer
+11-14 14:38:30.071 26280 27057 W ReactNativeJS:     in BDelivery(RootComponent)
+11-14 14:38:32.298 26280 26642 D OneSignal: [DefaultDispatcher-worker-7] initWithContext(context: com.bdelivery.MainApplication@88c5c74, appId: null)
+11-14 14:38:32.298 26280 26642 D OneSignal: [DefaultDispatcher-worker-7] initWithContext: SDK already initialized
+11-14 14:38:32.300 26280 26642 I OneSignal: [DefaultDispatcher-worker-7] Restoring notifications
+11-14 14:40:15.177 26280 27682 I ReactNativeJS: Bridgeless mode is enabled
+11-14 14:40:15.508 26280 27682 I ReactNativeJS: Running "BDelivery" with {"rootTag":21,"initialProps":{},"fabric":true}
+11-14 14:40:15.849 26280 27683 D OneSignal: [mqt_v_native] initWithContext(context: com.bdelivery.MainActivity@f498f7a, appId: d6148736-6459-4778-abec-95105ff68939)
+11-14 14:40:15.850 26280 27683 D OneSignal: [mqt_v_native] initWithContext: SDK already initialized
+11-14 14:40:15.851 26280 27683 D OneSignal: [mqt_v_native] NotificationsManager.addPermissionObserver(observer: com.onesignal.rnonesignalandroid.RNOneSignal@9676e61)
+11-14 14:40:15.852 26280 27682 I ReactNativeJS: ✅ OneSignal Initialized
+11-14 14:40:47.997 26280 26280 D OneSignal: [main] ApplicationService.onActivityPaused(1,APP_OPEN): com.bdelivery.MainActivity@f498f7a
+11-14 14:40:48.052 26280 26280 D OneSignal: [main] ApplicationService.onActivityStopped(1,APP_OPEN): com.bdelivery.MainActivity@f498f7a
+11-14 14:40:48.053 26280 26280 D OneSignal: [main] ApplicationService: current activity=null
+11-14 14:40:48.053 26280 26280 D OneSignal: [main] ApplicationService.handleLostFocus: application is now out of focus
+11-14 14:40:48.054 26280 26280 D OneSignal: [main] LocationController scheduleUpdate not possible, location shared not enabled
+11-14 14:40:48.057 26280 26280 D OneSignal: [main] SessionService.onUnfocused adding time 150424 for total: 150424
+11-14 14:40:52.424 26280 26280 D OneSignal: [main] ApplicationService.onActivityStarted(0,APP_CLOSE): com.bdelivery.MainActivity@f498f7a
+11-14 14:40:52.424 26280 26280 D OneSignal: [main] ApplicationService: current activity=com.bdelivery.MainActivity@f498f7a
+11-14 14:40:52.428 26280 26280 D OneSignal: [main] ApplicationService.handleFocus: application is now in focus, nextResumeIsFirstActivity=false
+11-14 14:40:52.474 26280 26280 D OneSignal: [main] BackgroundManager cancel background sync
+11-14 14:40:52.487 26280 26280 D OneSignal: [main] SessionService.onFocus() - fired from start: false
+11-14 14:40:52.490 26280 26280 D OneSignal: [main] SessionService: New session started at 1763111452489
+11-14 14:40:52.490 26280 26280 D OneSignal: [main] InfluenceManager.restartSessionIfNeeded(entryAction: APP_OPEN):
+11-14 14:40:52.490 26280 26280 D OneSignal:  channelTrackers: [ChannelTracker{tag=notification_id, influenceType=UNATTRIBUTED, indirectIds=null, directId=null}, ChannelTracker{tag=iam_id, influenceType=UNATTRIBUTED, indirectIds=null, directId=null}]
+11-14 14:40:52.491 26280 26280 D OneSignal: [main] ChannelTracker.getLastReceivedIds: lastChannelObjectReceived: [{"notification_id":"28995ab2-79df-454b-a8b9-083a849ba2a3","time":1762498520379},{"notification_id":"9c2970ef-12aa-4ff7-b3a0-9e5df07e10ad","time":1762516918358}]
+11-14 14:40:52.491 26280 26280 D OneSignal: [main] InfluenceManager.restartSessionIfNeeded: lastIds: []
+11-14 14:40:52.491 26280 26280 D OneSignal: [main] ChannelTracker.getLastReceivedIds: lastChannelObjectReceived: []
+11-14 14:40:52.491 26280 26280 D OneSignal: [main] InfluenceManager.restartSessionIfNeeded: lastIds: []
+11-14 14:40:52.492 26280 26280 D OneSignal: [main] OutcomeEventsController.sessionStarted: Cleaning outcomes for new session
+11-14 14:40:52.493 26280 26280 D OneSignal: [main] OperationRepo.enqueue(operation: {"name":"track-session-start","appId":"d6148736-6459-4778-abec-95105ff68939","onesignalId":"local-2a14e1a8-8767-4bb7-acc1-357fe8405eb7"}, flush: true)
+11-14 14:40:52.498 26280 26280 D OneSignal: [main] ApplicationService.onActivityResumed(1,APP_OPEN): com.bdelivery.MainActivity@f498f7a
+11-14 14:41:07.790 26280 27682 I ReactNativeJS: 'externalId.toString()', '1'
+11-14 14:41:07.794 26280 27683 D OneSignal: [mqt_v_native] login(externalId: 2345, jwtBearerToken: null)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS: Warning: Drawer uses the legacy childContextTypes API which is no longer supported. Use React.createContext() instead.
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Drawer (created by HomeScreen)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in HomeScreen (created by SceneView)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in StaticContainer
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in EnsureSingleNavigator (created by SceneView)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in SceneView (created by NativeStackNavigator)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in RNSScreenContentWrapper (created by ScreenContentWrapper)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in ScreenContentWrapper (created by DebugContainer)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in DebugContainer
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in RNSScreen (created by Animated(Anonymous))
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Animated(Anonymous)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in DelayedFreeze
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in InnerScreen (created by Screen)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Screen
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in ScreenStackItem (created by SceneView)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in SceneView (created by NativeStackView)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in DelayedFreeze (created by ScreenStack)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in RNSScreenStack (created by ScreenStack)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Unknown (created by ScreenStack)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in ScreenStack (created by NativeStackView)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in RNCSafeAreaProvider (created by SafeAreaProvider)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in SafeAreaProvider (created by SafeAreaProviderCompat)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in SafeAreaProviderCompat (created by NativeStackView)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in NativeStackView (created by NativeStackNavigator)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in PreventRemoveProvider (created by NavigationContent)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in NavigationContent
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Unknown (created by NativeStackNavigator)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in NativeStackNavigator (created by Container)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in ThemeProvider
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in EnsureSingleNavigator
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in BaseNavigationContainer
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in NavigationContainerInner (created by Container)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Container (created by App)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in Provider (created by App)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in App
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in AppContainer
+11-14 14:41:08.026 26280 27682 W ReactNativeJS:     in BDelivery(RootComponent)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS: Warning: Drawer uses the legacy contextTypes API which is no longer supported. Use React.createContext() with static contextType instead.
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Drawer (created by HomeScreen)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in HomeScreen (created by SceneView)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in StaticContainer
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in EnsureSingleNavigator (created by SceneView)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in SceneView (created by NativeStackNavigator)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in RNSScreenContentWrapper (created by ScreenContentWrapper)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in ScreenContentWrapper (created by DebugContainer)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in DebugContainer
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in RNSScreen (created by Animated(Anonymous))
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Animated(Anonymous)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in DelayedFreeze
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in InnerScreen (created by Screen)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Screen
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in ScreenStackItem (created by SceneView)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in SceneView (created by NativeStackView)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in DelayedFreeze (created by ScreenStack)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in RNSScreenStack (created by ScreenStack)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Unknown (created by ScreenStack)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in ScreenStack (created by NativeStackView)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in RNCSafeAreaProvider (created by SafeAreaProvider)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in SafeAreaProvider (created by SafeAreaProviderCompat)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in SafeAreaProviderCompat (created by NativeStackView)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in NativeStackView (created by NativeStackNavigator)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in PreventRemoveProvider (created by NavigationContent)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in NavigationContent
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Unknown (created by NativeStackNavigator)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in NativeStackNavigator (created by Container)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in ThemeProvider
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in EnsureSingleNavigator
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in BaseNavigationContainer
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in NavigationContainerInner (created by Container)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Container (created by App)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in Provider (created by App)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in App
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in AppContainer
+11-14 14:41:08.042 26280 27682 W ReactNativeJS:     in BDelivery(RootComponent)
+11-14 14:41:08.192 26280 27682 W ReactNativeJS: 'Warning: componentWillMount has been renamed, and is not recommended for use. See https://react.dev/link/unsafe-component-lifecycles for details.\n\n* Move code with side effects to componentDidMount, and set initial state in the constructor.\n* Rename componentWillMount to UNSAFE_componentWillMount to suppress this warning in non-strict mode. In React 18.x, only the UNSAFE_ name will work. To rename all deprecated lifecycles to their new names, you can run `npx react-codemod rename-unsafe-lifecycles` in your project source folder.\n\nPlease update the following components: %s', 'Drawer'
+11-14 14:41:08.195 26280 27682 W ReactNativeJS: 'Warning: componentWillReceiveProps has been renamed, and is not recommended for use. See https://react.dev/link/unsafe-component-lifecycles for details.\n\n* Move data fetching code or side effects to componentDidUpdate.\n* If you\'re updating state whenever props change, refactor your code to use memoization techniques or move it to static getDerivedStateFromProps. Learn more at: https://react.dev/link/derived-state\n* Rename componentWillReceiveProps to UNSAFE_componentWillReceiveProps to suppress this warning in non-strict mode. In React 18.x, only the UNSAFE_ name will work. To rename all deprecated lifecycles to their new names, you can run `npx react-codemod rename-unsafe-lifecycles` in your project source folder.\n\nPlease update the following components: %s', 'Drawer'
+11-14 14:41:09.682 26280 27682 W ReactNativeJS: Warning: Drawer uses the legacy childContextTypes API which is no longer supported. Use React.createContext() instead.
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Drawer (created by HomeScreen)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in HomeScreen (created by SceneView)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in StaticContainer
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in EnsureSingleNavigator (created by SceneView)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in SceneView (created by NativeStackNavigator)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in RNSScreenContentWrapper (created by ScreenContentWrapper)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in ScreenContentWrapper (created by DebugContainer)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in DebugContainer
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in RNSScreen (created by Animated(Anonymous))
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Animated(Anonymous)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in DelayedFreeze
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in InnerScreen (created by Screen)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Screen
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in ScreenStackItem (created by SceneView)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in SceneView (created by NativeStackView)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in DelayedFreeze (created by ScreenStack)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in RNSScreenStack (created by ScreenStack)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Unknown (created by ScreenStack)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in ScreenStack (created by NativeStackView)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in RNCSafeAreaProvider (created by SafeAreaProvider)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in SafeAreaProvider (created by SafeAreaProviderCompat)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in SafeAreaProviderCompat (created by NativeStackView)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in NativeStackView (created by NativeStackNavigator)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in PreventRemoveProvider (created by NavigationContent)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in NavigationContent
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Unknown (created by NativeStackNavigator)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in NativeStackNavigator (created by Container)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in ThemeProvider
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in EnsureSingleNavigator
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in BaseNavigationContainer
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in NavigationContainerInner (created by Container)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Container (created by App)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in Provider (created by App)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in App
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in AppContainer
+11-14 14:41:09.682 26280 27682 W ReactNativeJS:     in BDelivery(RootComponent)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS: Warning: Drawer uses the legacy contextTypes API which is no longer supported. Use React.createContext() with static contextType instead.
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Drawer (created by HomeScreen)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in HomeScreen (created by SceneView)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in StaticContainer
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in EnsureSingleNavigator (created by SceneView)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in SceneView (created by NativeStackNavigator)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in RNSScreenContentWrapper (created by ScreenContentWrapper)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in ScreenContentWrapper (created by DebugContainer)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in DebugContainer
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in RNSScreen (created by Animated(Anonymous))
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Animated(Anonymous)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in DelayedFreeze
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in InnerScreen (created by Screen)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Screen
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in ScreenStackItem (created by SceneView)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in SceneView (created by NativeStackView)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Suspender (created by Freeze)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Suspense (created by Freeze)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Freeze (created by DelayedFreeze)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in DelayedFreeze (created by ScreenStack)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in RNSScreenStack (created by ScreenStack)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Unknown (created by ScreenStack)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in ScreenStack (created by NativeStackView)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in RNCSafeAreaProvider (created by SafeAreaProvider)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in SafeAreaProvider (created by SafeAreaProviderCompat)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in SafeAreaProviderCompat (created by NativeStackView)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in NativeStackView (created by NativeStackNavigator)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in PreventRemoveProvider (created by NavigationContent)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in NavigationContent
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Unknown (created by NativeStackNavigator)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in NativeStackNavigator (created by Container)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in ThemeProvider
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in EnsureSingleNavigator
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in BaseNavigationContainer
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in NavigationContainerInner (created by Container)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Container (created by App)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in Provider (created by App)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in App
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in RCTView (created by View)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in View (created by AppContainer)
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in AppContainer
+11-14 14:41:09.718 26280 27682 W ReactNativeJS:     in BDelivery(RootComponent)

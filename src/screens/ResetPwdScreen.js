@@ -22,7 +22,7 @@ import { changePwd, logout, resetPwd } from '../services/api/api';
 const { width } = Dimensions.get('window');
 
 const ResetPwdScreen = ({ navigation, route }) => {
-    const { agentIdFromOtp } = route?.params || {};
+    const { resetToken } = route?.params || {};
     const [agentId, setAgentId] = useState(null);
     const [oldPassword, setOldPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -49,11 +49,11 @@ const ResetPwdScreen = ({ navigation, route }) => {
     // }, []);
 
     const onResetPassword = async () => {
-        if (!agentIdFromOtp) {
-            setErrorAlertMessage('Agent not logged in');
-            setShowErrorAlert(true);
-            return;
-        }
+        // if (!agentIdFromOtp) {
+        //     setErrorAlertMessage('Agent not logged in');
+        //     setShowErrorAlert(true);
+        //     return;
+        // }
 
         if (!newPassword || !confirmPassword) {
             setErrorAlertMessage('Please fill all fields');
@@ -81,17 +81,17 @@ const ResetPwdScreen = ({ navigation, route }) => {
             //     payload
             // );
 
-            const response = await resetPwd(agentIdFromOtp, confirmPassword, newPassword);
+            const response = await resetPwd(resetToken, confirmPassword);
 
             const res = response.data;
-
-            if (res?.Data === true) {
+            // console.log('resetres', res)
+            if (res?.success) {
                 // Alert.alert('Success', 'Password changed successfully', [
                 //     { text: 'OK', onPress: () => navigation.goBack() },
                 // ]);
                 setShowSuccessAlert(true)
             } else {
-                setErrorAlertMessage(res?.Message || 'Password change failed');
+                setErrorAlertMessage(res?.message || 'Password change failed');
                 setShowAlert(true);
             }
         } catch (error) {

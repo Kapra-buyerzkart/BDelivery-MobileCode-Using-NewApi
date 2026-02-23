@@ -1,28 +1,27 @@
 import apiClient from "./apiClient";
 
 export const login = (phoneNo, password) => {
-    return apiClient.post("/Auth/Login", {
-        PhoneNo: phoneNo,
-        Password: password,
+    return apiClient.post("/deliveryagent/auth/login", {
+        phone: phoneNo,
+        password: password,
     });
 };
 
-export const changePwd = (agentId, oldPassword, confirmPassword, newPassword) => {
-    return apiClient.post("/Auth/ChangePassword", {
-        AgentId: agentId,
-        OldPassword: oldPassword,
-        ConfirmPassword: confirmPassword,
-        NewPassword: newPassword
+export const changePwd = (oldPassword, newPassword) => {
+    return apiClient.post("/deliveryagent/changepassword", {
+        oldpassword: oldPassword,
+        newpassword: newPassword
     });
 };
 
-export const fetchProfileDetails = (agentId) => {
-    return apiClient.get(`/Auth/Profile/${agentId}`);
+export const fetchProfileDetails = () => {
+    return apiClient.get('deliveryagent/profile');
 };
 
 export const logout = (refreshToken) => {
-    return apiClient.post("/Auth/Logout", {
-        refreshTokenId: refreshToken
+    console.log('refreshToken', refreshToken)
+    return apiClient.post("/auth/logout", {
+        refreshToken: refreshToken
     });
 };
 
@@ -30,19 +29,24 @@ export const forgotPwd = (mobileNumber) => {
     return apiClient.get(`/Auth/ForgotPassword?mobileNumber=${mobileNumber}`);
 };
 
-export const verifyOtp = (phoneNo, otp, otpurlkey) => {
-    return apiClient.post("/Auth/VerifyOtp", {
-        PhoneNo: phoneNo,
-        Otp: otp,
-        OtpUrlKey: otpurlkey
+export const sendOtp = (phoneNo) => {
+    return apiClient.post("/deliveryagent/auth/sendotp", {
+        phone: phoneNo
     });
 };
 
-export const resetPwd = (agentId, newPassword, confirmPassword) => {
-    return apiClient.post("/Auth/ResetPassword", {
-        AgentId: agentId,
-        NewPassword: newPassword,
-        ConfirmPassword: confirmPassword
+export const verifyOtp = (phoneNo, otp, otpType) => {
+    return apiClient.post("/deliveryagent/auth/verifyotp", {
+        phone: phoneNo,
+        otp: otp,
+        otpType: otpType
+    });
+};
+
+export const resetPwd = (resetToken, newPassword) => {
+    return apiClient.post("/deliveryagent/auth/resetpassword", {
+        resetToken,
+        newPassword
     });
 };
 
@@ -52,24 +56,39 @@ export const resendOtp = (phoneno) => {
     });
 }
 
-export const assignedOrders = (agentId) => {
-    return apiClient.get(`/DeliveryAgent/by-agentorder?agentId=${agentId}`);
-};
+// export const assignedOrders = (agentId) => {
+//     return apiClient.get(`/DeliveryAgent/by-agentorder?agentId=${agentId}`);
+// };
 
-export const modifyOrderStatus = (orderId, agentId, status) => {
-    return apiClient.post("Delivery/ModifyStatustAssignedOrders", {
-        orderId: orderId,
-        delAgentId: agentId,
-        status: status
+// export const modifyOrderStatus = (orderId, agentId, status) => {
+//     return apiClient.post("Delivery/ModifyStatustAssignedOrders", {
+//         orderId: orderId,
+//         delAgentId: agentId,
+//         status: status
+//     });
+// };
+
+export const modifyOrderStatus = (orderId, newstatuskey, latitude, longitude, deliverynote, deliverysignimageurl) => {
+    return apiClient.post("deliveryagent/orders/updatestatus", {
+        orderId,
+        newstatuskey,
+        latitude,
+        longitude,
+        deliverynote,
+        deliverysignimageurl
     });
 };
 
-export const getAllOrders = (agentId, status) => {
-    return apiClient.get(`/DeliveryAgent/GetAllOrderSuperMarket?agentid=${agentId}&status=${status}`)
+export const getAllOrders = (tab) => {
+    return apiClient.get(`/deliveryagent/orders?tabKey=${tab}`)
 }
 
+// export const fetchOrderDetails = (orderId) => {
+//     return apiClient.get(`/Order/CustOrderItemList?orderId=${orderId}`);
+// };
+
 export const fetchOrderDetails = (orderId) => {
-    return apiClient.get(`/Order/CustOrderItemList?orderId=${orderId}`);
+    return apiClient.get(`/deliveryagent/orders/${orderId}`);
 };
 
 export const completeOrderDelivery = (orderId, delAgentId, status, signImage, deliveryNote, deliveryFreebies) => {
@@ -83,21 +102,26 @@ export const completeOrderDelivery = (orderId, delAgentId, status, signImage, de
     });
 };
 
-export const markAttendance = (DeliveryBoyId, Status, longitude, latitude) => {
-    return apiClient.post("/DeliveryAgent/attendance", {
-        DeliveryBoyId,
-        Status,
+export const markAttendance = (status, latitude, longitude) => {
+    return apiClient.post("/deliveryagent/attendance/mark", {
+        status,
         longitude,
         latitude
     });
 };
 
-export const fetchAttendance = (DeliveryBoyId, StartDate, EndDate) => {
-    return apiClient.get(`/DeliveryAgent/attendanceDateRange?deliveryBoyId=${DeliveryBoyId}&startDate=${StartDate}&endDate=${EndDate}`);
+export const fetchAttendance = (StartDate, EndDate) => {
+    // console.log("StartDate", StartDate)
+    // console.log('EndDate', EndDate)
+    // return apiClient.get(`/DeliveryAgent/attendanceDateRange?deliveryBoyId=${DeliveryBoyId}&startDate=${StartDate}&endDate=${EndDate}`);
+    return apiClient.get(`/deliveryagent/attendance/report?fromdate=${StartDate}&todate=${EndDate}`);
 }
 
-export const fetchEarnings = (DeliveryBoyId, StartDate, EndDate) => {
-    return apiClient.get(`/DeliveryAgent/earningsDateRange?delivery_boy_id=${DeliveryBoyId}&startDate=${StartDate}&endDate=${EndDate}`);
+export const fetchEarnings = (StartDate, EndDate) => {
+    // console.log("StartDate", StartDate)
+    // console.log('EndDate', EndDate)
+    // return apiClient.get(`/DeliveryAgent/attendanceDateRange?deliveryBoyId=${DeliveryBoyId}&startDate=${StartDate}&endDate=${EndDate}`);
+    return apiClient.get(`/deliveryagent/Earnings/report?fromdate=${StartDate}&todate=${EndDate}`);
 }
 
 export const fetchDeliveryAgentAcceptedOrders = (agentId) => {
@@ -109,3 +133,7 @@ export const fetchDeliveredOrders = (agentId) => {
     // console.log("delivered")
     return apiClient.get(`/DeliveryAgent/GetAllOrderSuperMarketByStatus/?agentid=${agentId}&status=Order Delivered`)
 }
+
+export const assignedOrders = (agentId) => {
+    return apiClient.get(`/deliveryagent/orders`);
+};

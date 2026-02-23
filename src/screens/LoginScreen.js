@@ -9,6 +9,7 @@ import {
     Dimensions,
     SafeAreaView,
     Vibration,
+    Alert,
 } from 'react-native';
 import { AppColors } from '../constants/Colors';
 import { auth, db } from '../services/firebase';
@@ -25,6 +26,7 @@ import firestore from '@react-native-firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { fetchAgentDetails } from '../redux/slices/agentSlice';
 import { login } from '../services/api/api';
+import { OneSignal } from 'react-native-onesignal';
 
 const { width } = Dimensions.get('window');
 
@@ -78,46 +80,82 @@ const LoginScreen = props => {
     //     }
     // };
 
+    // const loginWithPhoneAndPassword = async () => {
+    //     setLoading(true);
+    //     try {
+    //         // const usersQuerySnapshot = await firestore()
+    //         //     .collection('deliveryAgents')
+    //         //     .where('mobile', '==', mobileNo)
+    //         //     .get();
+
+    //         const res = await login(mobileNo, password);
+    //         // console.log("res", res.data)
+    //         if (res.data?.Token) {
+    //             await AsyncStorage.setItem("authToken", res.data.Token);
+    //             await AsyncStorage.setItem("refreshToken", res.data.RefreshToken);
+    //             await AsyncStorage.setItem("agentId", res.data.AgentId.toString());
+    //             await AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
+    //             props.navigation.replace('Home');
+    //         } else {
+    //             Alert.alert("Login Failed", res.data?.Message || "Unknown error");
+    //         }
+    //         // console.log("res", res.data)
+    //         // if (!usersQuerySnapshot.empty) {
+    //         //     const userDoc = usersQuerySnapshot.docs[0]; // Assuming mobileNo is unique
+    //         //     const userData = userDoc.data();
+
+    //         //     if (userData.password === password) {
+    //         //         await AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
+    //         //         await AsyncStorage.setItem('id', userData.id);
+    //         //         await AsyncStorage.setItem('storeId', userData.storeId);
+    //         //         // setPhoneNumber(mobileNo);
+    //         //         // dispatch(fetchAgentDetails())
+    //         //         props.navigation.replace('Home');
+    //         //     } else {
+    //         //         setShowPasswordIncorrectAlert(true);
+    //         //     }
+    //         // } else {
+    //         //     setShowUserNotExistAlert(true);
+    //         // }
+    //     } catch (error) {
+    //         console.error('Error logging in:', error);
+    //         setShowLoginFailedAlert(true)
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
     const loginWithPhoneAndPassword = async () => {
         setLoading(true);
         try {
-            // const usersQuerySnapshot = await firestore()
-            //     .collection('deliveryAgents')
-            //     .where('mobile', '==', mobileNo)
-            //     .get();
-
             const res = await login(mobileNo, password);
-            // console.log("res", res.data)
-            if (res.data?.Token) {
-                await AsyncStorage.setItem("authToken", res.data.Token);
-                await AsyncStorage.setItem("refreshToken", res.data.RefreshToken);
-                await AsyncStorage.setItem("agentId", res.data.AgentId.toString());
-                await AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
+            // console.log('resssss', res.data.data)
+
+            if (res.data?.success) {
+                const externalId = res.data.data.deliveryAgentId.toString();
+                const onesignalId = `agent_${externalId}`;
+                // console.log('externalIdDDDD', externalId)
+                // console.log("📌 Final externalId to set:", onesignalId);
+
+                // VERY IMPORTANT – RESET OLD USER
+                await OneSignal.logout();
+
+                // Now login with new external ID
+                OneSignal.login(onesignalId);
+
+                await AsyncStorage.setItem("authToken", res.data.data.accessToken);
+                await AsyncStorage.setItem("refreshToken", res.data.data.refreshToken);
+                await AsyncStorage.setItem("agentId", externalId);
+                await AsyncStorage.setItem("isLoggedIn", JSON.stringify(true));
+
                 props.navigation.replace('Home');
             } else {
-                Alert.alert("Login Failed", res.data?.Message || "Unknown error");
+                Alert.alert("Login Failed", res.data?.message || "Unknown error");
             }
-            // console.log("res", res.data)
-            // if (!usersQuerySnapshot.empty) {
-            //     const userDoc = usersQuerySnapshot.docs[0]; // Assuming mobileNo is unique
-            //     const userData = userDoc.data();
 
-            //     if (userData.password === password) {
-            //         await AsyncStorage.setItem('isLoggedIn', JSON.stringify(true));
-            //         await AsyncStorage.setItem('id', userData.id);
-            //         await AsyncStorage.setItem('storeId', userData.storeId);
-            //         // setPhoneNumber(mobileNo);
-            //         // dispatch(fetchAgentDetails())
-            //         props.navigation.replace('Home');
-            //     } else {
-            //         setShowPasswordIncorrectAlert(true);
-            //     }
-            // } else {
-            //     setShowUserNotExistAlert(true);
-            // }
         } catch (error) {
             console.error('Error logging in:', error);
-            setShowLoginFailedAlert(true)
+            setShowLoginFailedAlert(true);
         } finally {
             setLoading(false);
         }

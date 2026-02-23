@@ -49,11 +49,11 @@ const ChangePwdScreen = ({ navigation, route }) => {
     }, []);
 
     const onChangePassword = async () => {
-        if (!agentId) {
-            setErrorAlertMessage('Agent not logged in');
-            setShowErrorAlert(true);
-            return;
-        }
+        // if (!agentId) {
+        //     setErrorAlertMessage('Agent not logged in');
+        //     setShowErrorAlert(true);
+        //     return;
+        // }
 
         if (!oldPassword || !newPassword || !confirmPassword) {
             setErrorAlertMessage('Please fill all fields');
@@ -81,17 +81,17 @@ const ChangePwdScreen = ({ navigation, route }) => {
             //     payload
             // );
 
-            const response = await changePwd(agentId, oldPassword, confirmPassword, newPassword);
+            const response = await changePwd(oldPassword, newPassword);
 
             const res = response.data;
-
-            if (res?.Data === true) {
+            // console.log('resres', res)
+            if (res?.success) {
                 // Alert.alert('Success', 'Password changed successfully', [
                 //     { text: 'OK', onPress: () => navigation.goBack() },
                 // ]);
                 setShowSuccessAlert(true)
             } else {
-                setErrorAlertMessage(res?.Message || 'Password change failed');
+                setErrorAlertMessage(res?.message || 'Password change failed');
                 setShowAlert(true);
             }
         } catch (error) {

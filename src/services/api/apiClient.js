@@ -3,7 +3,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const apiClient = axios.create({
-    baseURL: "https://grocery.kapradaily.com/api/api/v2",
+    baseURL: "https://core.kapradaily.com/api/v1",
     timeout: 20000,
     headers: {
         "Content-Type": "application/json",
@@ -54,14 +54,14 @@ const refreshAccessToken = async () => {
         if (!refreshToken) return null;
 
         const response = await axios.post(
-            "https://grocery.kapradaily.com/api/api/v2/Auth/Refresh",
-            { refreshTokenId: refreshToken },
-            { headers: { "Content-Type": "application/json" } }
+            "https://core.kapradaily.com/api/v1/auth/refreshtoken",
+            { refreshToken: refreshToken },
+            // { headers: { "Content-Type": "application/json" } }
         );
 
-        if (response.data?.Token) {
-            await AsyncStorage.setItem("authToken", response.data.Token);
-            return response.data.Token;
+        if (response.data?.data?.accessToken) {
+            await AsyncStorage.setItem("authToken", response.data?.data?.accessToken);
+            return response.data?.data?.accessToken;
         }
 
         return null;

@@ -1,0 +1,87 @@
+.
+├── __tests__
+│   └── App.test.tsx
+├── app.json
+├── App.tsx
+├── babel.config.js
+├── Gemfile
+├── google-services-dev.json
+├── google-services-prod.json
+├── index.js
+├── jest.config.js
+├── main
+├── metro.config.js
+├── onesignal_debug_log.txt
+├── package-lock.json
+├── package.json
+├── react-native.config.js
+├── README.md
+├── src
+│   ├── assets
+│   │   ├── fonts
+│   │   │   ├── OpenSans-Bold.ttf
+│   │   │   ├── OpenSans-ExtraBold.ttf
+│   │   │   ├── OpenSans-Regular.ttf
+│   │   │   └── OpenSans-SemiBold.ttf
+│   │   └── images
+│   │       ├── google-maps.png
+│   │       ├── ic_launcher_round.png
+│   │       ├── ic_launcher.png
+│   │       ├── icon.png
+│   │       └── logo.png
+│   ├── components
+│   │   ├── AddressCard.js
+│   │   ├── AlertComponent.js
+│   │   ├── DrawerContent.js
+│   │   ├── EmptyComponent.js
+│   │   ├── HistoryCard.js
+│   │   ├── LoaderComponent.js
+│   │   ├── OrderCard.js
+│   │   └── TaskCompletedModal.js
+│   ├── constants
+│   │   ├── Colors.js
+│   │   ├── Fonts.js
+│   │   └── Urls.js
+│   ├── hooks
+│   │   └── useLocationTracking.js
+│   ├── navigation
+│   │   └── Container.js
+│   ├── redux
+│   │   ├── slices
+│   │   │   ├── agentSlice.js
+│   │   │   ├── holidaysSlice.js
+│   │   │   ├── incentivesSlice.js
+│   │   │   └── storeSlice.js
+│   │   └── store.js
+│   ├── screens
+│   │   ├── AttendanceHistoryScreen.js
+│   │   ├── AttendanceScreen.js
+│   │   ├── ChangePwdScreen.js
+│   │   ├── CompletedOrdersLIstScreen.js
+│   │   ├── EarningsNewScreen.js
+│   │   ├── EarningsScreen.js
+│   │   ├── ForgotPwdScreen.js
+│   │   ├── HistoryScreen.js
+│   │   ├── HomeScreen.js
+│   │   ├── LoginScreen.js
+│   │   ├── MapScreen.js
+│   │   ├── OrderDeliveredDetailsScreen.js
+│   │   ├── OrderDetailsScreen.js
+│   │   ├── OtpVerifyScreen.js
+│   │   ├── ProfileScreen.js
+│   │   ├── ResetPwdScreen.js
+│   │   ├── TaskDetailsScreen.js
+│   │   ├── TaskScreen.js
+│   │   └── WalletScreen.js
+│   ├── services
+│   │   ├── api
+│   │   │   ├── api.js
+│   │   │   ├── apiClient.js
+│   │   │   └── apiClientForm.js
+│   │   └── firebase
+│   │       └── firebase.js
+│   └── utils
+├── structure.txt
+└── tsconfig.json
+
+17 directories, 68 files

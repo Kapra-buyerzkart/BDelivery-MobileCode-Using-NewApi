@@ -21,6 +21,7 @@ export default function AttendanceHistoryScreen(props) {
     const { agentId } = route.params;
 
     const [attendanceList, setAttendanceList] = useState([]);
+    const [overallAttendance, setOverallAttendance] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const today = new Date();
@@ -57,9 +58,11 @@ export default function AttendanceHistoryScreen(props) {
             const start = formatDateTwo(startDate);
             const end = formatDateTwo(endDate);
 
-            const res = await fetchAttendance(agentId, start, end);
+            const res = await fetchAttendance(start, end);
+            // console.log('res.data.data', res.data.data)
             if (res.data.success) {
-                setAttendanceList(res.data.data);
+                setAttendanceList(res.data.data.dayWise);
+                setOverallAttendance(res.data.data.overall)
             } else {
                 Alert.alert("Error", "Failed to fetch attendance records.");
             }
@@ -99,20 +102,39 @@ export default function AttendanceHistoryScreen(props) {
         }
     };
 
+    const convert24To12 = (time24) => {
+        if (!time24) return null;
+
+        let [hours, minutes] = time24.split(':').map(Number);
+        const period = hours >= 12 ? 'PM' : 'AM';
+
+        hours = hours % 12 || 12; // convert 0 -> 12
+        return `${hours}:${String(minutes).padStart(2, '0')} ${period}`;
+    };
+
+    const getTimeHHMM = (dateTime) => {
+        if (!dateTime) return null;
+
+        const time24 = dateTime.slice(11, 16);
+        return convert24To12(time24);
+    };
+
     const renderItem = ({ item }) => {
-        const dateObj = new Date(item.timestamp);
+        const dateObj = new Date(item.workDate);
         const dateStr = dateObj.toLocaleDateString("en-GB", {
             day: "2-digit",
             month: "short",
             year: "numeric",
         });
 
-        const timeStr = dateObj.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+
+        // const timeStr = dateObj.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
         return (
             <View style={styles.row}>
                 <Text style={styles.cell}>{dateStr}</Text>
-                <Text style={styles.cell}>{timeStr}</Text>
-                <Text
+                <Text style={styles.cell}>{getTimeHHMM(item.inTime)}</Text>
+                <Text style={styles.cell}>{getTimeHHMM(item.outTime)}</Text>
+                {/* <Text
                     style={[
                         styles.cell,
                         item.status === "PUNCH IN"
@@ -123,7 +145,7 @@ export default function AttendanceHistoryScreen(props) {
                     ]}
                 >
                     {item.status}
-                </Text>
+                </Text> */}
             </View>
         );
     };
@@ -177,6 +199,55 @@ export default function AttendanceHistoryScreen(props) {
                 </TouchableOpacity>
             </View>
 
+            {/* <View style={{
+                flexDirection: 'row',
+                marginBottom: 5
+            }}> */}
+                <View style={{
+                    alignItems: 'center',
+                    backgroundColor: AppColors.primaryColor,
+                    borderRadius: 10,
+                    width: 210,
+                    justifyContent: 'center',
+                    height: 34,
+                    flexDirection: 'row',
+                    alignSelf: 'center',
+                    marginBottom: 5
+                    // padding: 10
+                }}>
+                    <Text style={{
+                        color: AppColors.whiteColor,
+                        fontFamily: Fonts.OpenSansRegular,
+                        fontSize: 14
+                    }}>Total hours worked:</Text>
+                    <Text style={{
+                        color: AppColors.whiteColor,
+                        fontFamily: Fonts.OpenSansSemiBold,
+                        fontSize: 14
+                    }}>{overallAttendance.overallHours} hrs</Text>
+                </View>
+                {/* <View style={{
+                    alignItems: 'center',
+                    backgroundColor: AppColors.primaryColor,
+                    borderRadius: 10,
+                    width: 150,
+                    justifyContent: 'center',
+                    height: 45
+                }}>
+                    <Text style={{
+                        color: AppColors.whiteColor,
+                        fontFamily: Fonts.OpenSansRegular,
+                        fontSize: 13
+                    }}>Total minutes worked:</Text>
+                    <Text style={{
+                        color: AppColors.whiteColor,
+                        fontFamily: Fonts.OpenSansSemiBold,
+                        fontSize: 13
+                    }}>{overallAttendance.overallMinutes} mins</Text>
+                </View> */}
+            {/* </View> */}
+
+
             {/* {showStartPicker && (
                 <DateTimePicker
                     value={startDate}
@@ -207,14 +278,14 @@ export default function AttendanceHistoryScreen(props) {
                     {/* Table Header */}
                     <View style={[styles.row, styles.headerRow]}>
                         <Text style={[styles.cell, styles.headerText]}>Date</Text>
-                        <Text style={[styles.cell, styles.headerText]}>Time</Text>
-                        <Text style={[styles.cell, styles.headerText]}>Status</Text>
+                        <Text style={[styles.cell, styles.headerText]}>In Time</Text>
+                        <Text style={[styles.cell, styles.headerText]}>Out Time</Text>
                     </View>
 
                     {/* Table Data */}
                     <FlatList
                         data={attendanceList}
-                        keyExtractor={(item) => item.attendance_id.toString()}
+                        keyExtractor={(item, index) => index.toString()}
                         renderItem={renderItem}
                         ListEmptyComponent={
                             <Text style={styles.emptyText}>No attendance records found.</Text>
@@ -242,7 +313,7 @@ const styles = StyleSheet.create({
     dateContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 20,
+        marginBottom: 15,
         marginTop: 15
     },
     dateButton: {
