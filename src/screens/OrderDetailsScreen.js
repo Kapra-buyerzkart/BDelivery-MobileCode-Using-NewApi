@@ -135,7 +135,7 @@ const OrderDetailsScreen = ({ route, navigation }) => {
     };
 
     const handleCallKapra = () => {
-        Linking.openURL(`tel:9048801110`); // Replace with real number
+        Linking.openURL(`tel:9048356555`); // Replace with real number
     };
 
     if (loading || orderDetailsLoading) return <LoaderComponent />;

@@ -3,6 +3,7 @@ import {
     ActivityIndicator,
     Alert,
     Image,
+    Modal,
     SafeAreaView,
     StyleSheet,
     Text,
@@ -33,10 +34,14 @@ const DrawerContent = ({ navigation, closeDrawer }) => {
     const [loading, setLoading] = useState(false);
     const [isOnDuty, setIsOnDuty] = useState(false); // State for the switch
     const [id, setId] = useState(null);
+    const [logoutConfirmVisible, setLogoutConfirmVisible] = useState(false);
 
     const agent = useSelector((state) => state.agent);
     // console.log('agent', agent)
     const handleLogout = async () => {
+        if (loading) return;
+
+        setLoading(true);
         try {
             // console.log("11111")
             // await firestore()
@@ -52,12 +57,17 @@ const DrawerContent = ({ navigation, closeDrawer }) => {
             // await AsyncStorage.removeItem('isOnDuty');
             // console.log("logout")
             const refreshToken = await AsyncStorage.getItem("refreshToken");
-            const res = await logout(refreshToken);
+            await logout(refreshToken);
             // console.log('logout', res.data)
-            AsyncStorage.clear()
-            navigation.replace("Login")
+            await AsyncStorage.clear();
+            setLogoutConfirmVisible(false);
+            navigation.replace("Login");
         } catch (error) {
             console.error('Error during logout:', error);
+            Alert.alert('Logout failed', 'Please try again.');
+            setLogoutConfirmVisible(false);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -193,7 +203,12 @@ const DrawerContent = ({ navigation, closeDrawer }) => {
                 />
                 <Text style={styles.logoutText}>CHANGE PASSWORD</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={handleLogout} style={styles.logOut}>
+
+            <TouchableOpacity
+                onPress={() => setLogoutConfirmVisible(true)}
+                disabled={loading}
+                style={[styles.logOut, loading ? styles.disabled : null]}
+            >
                 <MaterialIcons
                     name={'logout'}
                     color={AppColors.primaryColor}
@@ -201,6 +216,36 @@ const DrawerContent = ({ navigation, closeDrawer }) => {
                 />
                 <Text style={styles.logoutText}>LOGOUT</Text>
             </TouchableOpacity>
+
+            <Modal
+                transparent
+                visible={logoutConfirmVisible}
+                animationType="fade"
+                onRequestClose={() => setLogoutConfirmVisible(false)}
+            >
+                <View style={styles.confirmModalOverlay}>
+                    <View style={styles.confirmModalContent}>
+                        <Text style={styles.confirmTitle}>Confirm Logout</Text>
+                        <Text style={styles.confirmMessage}>Are you sure you want to logout?</Text>
+                        <View style={styles.confirmButtonsRow}>
+                            <TouchableOpacity
+                                style={[styles.confirmButton, styles.cancelButton]}
+                                onPress={() => setLogoutConfirmVisible(false)}
+                                disabled={loading}
+                            >
+                                <Text style={styles.cancelButtonText}>Cancel</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                style={[styles.confirmButton, styles.logoutButton]}
+                                onPress={handleLogout}
+                                disabled={loading}
+                            >
+                                <Text style={styles.logoutButtonText}>{loading ? 'Logging out…' : 'Logout'}</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </SafeAreaView>
     );
 };
@@ -254,6 +299,65 @@ const styles = StyleSheet.create({
         fontFamily: Fonts.OpenSansBold,
         color: AppColors.darkGray,
         marginRight: 10,
+    },
+    disabled: {
+        opacity: 0.6,
+    },
+    confirmModalOverlay: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        padding: 20,
+    },
+    confirmModalContent: {
+        width: '100%',
+        backgroundColor: AppColors.whiteColor,
+        borderRadius: 12,
+        padding: 20,
+    },
+    confirmTitle: {
+        fontSize: 16,
+        fontFamily: Fonts.OpenSansBold,
+        color: AppColors.black,
+        marginBottom: 8,
+    },
+    confirmMessage: {
+        fontSize: 14,
+        fontFamily: Fonts.OpenSansRegular,
+        color: AppColors.darkGray,
+        marginBottom: 16,
+    },
+    confirmButtonsRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    confirmButton: {
+        flex: 1,
+        paddingVertical: 12,
+        borderRadius: 8,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    cancelButton: {
+        marginRight: 10,
+        backgroundColor: AppColors.whiteColor,
+        borderWidth: 1,
+        borderColor: AppColors.primaryColor,
+    },
+    logoutButton: {
+        marginLeft: 10,
+        backgroundColor: AppColors.primaryColor,
+    },
+    cancelButtonText: {
+        fontSize: 14,
+        fontFamily: Fonts.OpenSansBold,
+        color: AppColors.primaryColor,
+    },
+    logoutButtonText: {
+        fontSize: 14,
+        fontFamily: Fonts.OpenSansBold,
+        color: AppColors.whiteColor,
     },
 });
 
